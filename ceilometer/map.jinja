@@ -1,0 +1,22 @@
+
+{% set server = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': ['ceilometer-alarm-evaluator', 'ceilometer-api', 'ceilometer-agent-central', 'ceilometer-collector', 'python-ceilometerclient','ceilometer-agent-notification','ceilometer-alarm-notifier'],
+        'services': ['ceilometer-collector', 'ceilometer-api','ceilometer-agent-central','ceilometer-agent-notification','ceilometer-alarm-evaluator','ceilometer-alarm-notifier'],
+    },
+    'RedHat': {
+        'pkgs': ['openstack-ceilometer-alarm', 'openstack-ceilometer-api', 'openstack-ceilometer-central', 'openstack-ceilometer-collector', 'python-ceilometerclient'],
+        'services': ['openstack-ceilometer-collector', 'openstack-ceilometer-api'],
+    },
+}, merge=salt['pillar.get']('ceilometer:server')) %}
+
+{% set agent = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': ['ceilometer-agent-compute'],
+        'services': ['ceilometer-agent-compute'],
+    },
+    'RedHat': {
+        'pkgs': ['openstack-ceilometer-compute'],
+        'services': ['openstack-ceilometer-compute'],
+    },
+}, merge=salt['pillar.get']('ceilometer:agent')) %}

@@ -1,0 +1,8 @@
+parameters:
+  ceilometer:
+    agent:
+      publisher:
+        graphite:
+          enabled: true
+          host: ${_param:ceilometer_graphite_publisher_host}
+          port: ${_param:ceilometer_graphite_publisher_port}

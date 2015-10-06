@@ -1,0 +1,43 @@
+applications:
+- ceilometer
+parameters:
+  ceilometer:
+    server:
+      enabled: true
+      version: ${_param:ceilometer_version}
+      cluster: true
+      secret: ${_param:ceilometer_secret_key}
+      publisher:
+        default:
+      bind:
+        host: ${_param:cluster_local_address}
+        port: 8777
+      identity:
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        port: 35357
+        tenant: service
+        user: ceilometer
+        password: ${_param:keystone_ceilometer_password}
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        port: 5672
+        user: openstack
+        password: ${_param:rabbitmq_openstack_password}
+        virtual_host: '/openstack'
+        ha_queues: true
+        # Workaround for https://bugs.launchpad.net/ceilometer/+bug/1337715
+        rpc_thread_pool_size: 5
+      database:
+        engine: mongodb
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 27017
+        - host: ${_param:cluster_node02_address}
+          port: 27017
+        - host: ${_param:cluster_node03_address}
+          port: 27017
+        name: ceilometer
+        user: ceilometer
+        password: ${_param:mongodb_ceilometer_password}

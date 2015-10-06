@@ -1,0 +1,2 @@
+ceilometer/*             /usr/share/salt-formulas/env/ceilometer/
+metadata/service/*      /usr/share/salt-formulas/reclass/service/ceilometer/
