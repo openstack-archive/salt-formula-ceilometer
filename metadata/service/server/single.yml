@@ -6,6 +6,7 @@ parameters:
       enabled: true
       version: ${_param:ceilometer_version}
       secret: ${_param:ceilometer_secret_key}
+      ttl: 86400
       publisher:
         default:
       bind:

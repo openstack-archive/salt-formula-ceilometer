@@ -168,6 +168,10 @@ host={{ server.bind.host }}
 
 [database]
 
+metering_time_to_live = {{ server.ttl }}
+event_time_to_live = {{ server.ttl }}
+alarm_history_time_to_live = {{ server.ttl }}
+
 #
 # From oslo.db
 #
