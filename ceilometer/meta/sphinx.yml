@@ -1,0 +1,14 @@
+doc:
+  name: Ceilometer
+  description: The ceilometer project aims to deliver a unique point of contact for billing systems to acquire all of the measurements they need to establish customer billing, across all current OpenStack core components with work underway to support future OpenStack components.
+  role:
+  {%- if pillar.ceilometer.agent is defined %}
+    agent:
+      name: agent
+      param: {}
+  {%- endif %}
+  {%- if pillar.ceilometer.server is defined %}
+    server:
+      name: server
+      param: {}
+  {%- endif %}
