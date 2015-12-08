@@ -1,5 +1,7 @@
 applications:
 - ceilometer
+classes:
+- service.ceilometer.support
 parameters:
   ceilometer:
     agent:
