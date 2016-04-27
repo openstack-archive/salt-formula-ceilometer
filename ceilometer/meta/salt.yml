@@ -1,0 +1,10 @@
+orchestrate:
+  server:
+    priority: 680
+    require:
+      - salt: keystone.server
+  agent:
+    priority: 690
+    require:
+      - salt: ceilometer.server
+
