@@ -3,7 +3,10 @@
 Ceilometer
 ==========
 
-The ceilometer project aims to deliver a unique point of contact for billing systems to acquire all of the measurements they need to establish customer billing, across all current OpenStack core components with work underway to support future OpenStack components.
+The ceilometer project aims to deliver a unique point of contact for billing
+systems to acquire all of the measurements they need to establish customer
+billing, across all current OpenStack core components with work underway to
+support future OpenStack components.
 
 Sample pillars
 ==============
@@ -96,8 +99,10 @@ Things to improve/consider
 ==========================
 
 * Graphite publisher http://engineering.spilgames.com/using-ceilometer-graphite/
-* Juno additions - Split Events/Meters and Alarms databases, Polling angets are HA now, active/Activr Workload partitioning to central agents
-* Kilo additions - Splint Events - Meters - Agents, notification agents are HA now (everything is HA now), events - elastic search
+* Juno additions - Split Events/Meters and Alarms databases, Polling angets are
+HA now, active/Activr Workload partitioning to central agents
+* Kilo additions - Splint Events - Meters - Agents, notification agents are HA
+now (everything is HA now), events - elastic search
 * User notifier publisher vs rpc publisher (Juno+)
 * Enable jittering (rendom delay) to polling. (Kilo+)
 * Collect what you need - pipeline.yaml, tweak polling interval (Icehouse+)
@@ -117,3 +122,29 @@ Deployment scenarios
 * Custom consumers - kafka - Apache Storm (kilo+)
 * Debugging - Collecttions - Elastic serach - Kibana
 * Noisy services - Multiple notification buses
+
+Documentation and Bugs
+============================
+
+To learn how to deploy OpenStack Salt, consult the documentation available
+online at:
+
+    https://wiki.openstack.org/wiki/OpenStackSalt
+
+In the unfortunate event that bugs are discovered, they should be reported to
+the appropriate bug tracker. If you obtained the software from a 3rd party
+operating system vendor, it is often wise to use their own bug tracker for
+reporting problems. In all other cases use the master OpenStack bug tracker,
+available at:
+
+    http://bugs.launchpad.net/openstack-salt
+
+Developers wishing to work on the OpenStack Salt project should always base
+their work on the latest formulas code, available from the master GIT
+repository at:
+
+    https://git.openstack.org/cgit/openstack/salt-formula-ceilometer
+
+Developers should also join the discussion on the IRC list, at:
+
+    https://wiki.openstack.org/wiki/Meetings/openstack-salt
