@@ -511,6 +511,15 @@ graphite=ceilometer.publisher.graphite:GraphitePublisher
 #kombu_reconnect_delay = 1.0
 kombu_reconnect_delay = 5.0
 
+# RabbitMQ HA cluster host:port pairs. (list value)
+# Deprecated group/name - [DEFAULT]/rabbit_hosts
+{%- if server.message_queue.members is defined %}
+rabbit_hosts = {% for member in server.message_queue.members -%}
+                   {{ member.host }}:{{ member.get('port', 5672) }}
+                   {%- if not loop.last -%},{%- endif -%}
+               {%- endfor -%}
+{%- else %}
+
 # The RabbitMQ broker address where a single node is used. (string
 # value)
 # Deprecated group/name - [DEFAULT]/rabbit_host
@@ -523,9 +532,7 @@ rabbit_host = {{ server.message_queue.host }}
 #rabbit_port = 5672
 rabbit_port = {{ server.message_queue.port }}
 
-# RabbitMQ HA cluster host:port pairs. (list value)
-# Deprecated group/name - [DEFAULT]/rabbit_hosts
-#rabbit_hosts = $rabbit_host:$rabbit_port
+{%- endif %}
 
 # Connect over SSL for RabbitMQ. (boolean value)
 # Deprecated group/name - [DEFAULT]/rabbit_use_ssl

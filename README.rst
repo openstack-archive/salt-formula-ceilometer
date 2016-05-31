@@ -33,12 +33,13 @@ Ceilometer API/controller node
           password: pwd
         message_queue:
           engine: rabbitmq
-          host: 127.0.0.1
-          port: 5672
+          members:
+          - host: 127.0.0.1
+          - host: 127.0.0.1
+          - host: 127.0.0.1
           user: openstack
           password: pwd
           virtual_host: '/openstack'
-          rabbit_ha_queues: true
         database:
           engine: mongodb
           host: 127.0.0.1
