@@ -1,0 +1,8 @@
+Code-Review+2: Ales Komarek <ales.komarek@tcpcloud.eu>
+Workflow+1: Ales Komarek <ales.komarek@tcpcloud.eu>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 23 Jun 2016 15:00:16 +0000
+Reviewed-on: https://review.openstack.org/330071
+Project: openstack/salt-formula-ceilometer
+Branch: refs/heads/master
