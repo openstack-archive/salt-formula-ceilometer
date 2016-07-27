@@ -557,7 +557,6 @@ rabbit_password = {{ server.message_queue.password }}
 # Deprecated group/name - [DEFAULT]/rabbit_virtual_host
 #rabbit_virtual_host = /
 rabbit_virtual_host = {{ server.message_queue.virtual_host }}
-rabbit_ha_queues={{ server.message_queue.ha_queues }}
 
 # How frequently to retry connecting with RabbitMQ. (integer value)
 #rabbit_retry_interval = 1
