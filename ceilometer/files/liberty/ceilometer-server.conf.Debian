@@ -596,6 +596,7 @@ rabbit_virtual_host = {{ server.message_queue.virtual_host }}
 # Options defined in ceilometer.service
 #
 
+
 # User name to use for OpenStack service access. (string
 # value)
 #os_username=ceilometer
@@ -624,7 +625,7 @@ os_auth_url=http://{{ server.identity.host }}:5000/v2.0
 # Region name to use for OpenStack service endpoints. (string
 # value)
 #os_region_name=<None>
-os_region_name=RegionOne
+os_region_name={{ agent.get('region', 'RegionOne') }}
 
 # Type of endpoint in Identity service catalog to use for
 # communication with OpenStack services. (string value)
