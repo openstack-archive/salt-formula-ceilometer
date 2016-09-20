@@ -1,5 +1,6 @@
 ceilometer:
   server:
+    #region: RegionOne
     enabled: true
     version: liberty
     secret: password
