@@ -1,0 +1,9 @@
+Code-Review+1: Konstantin Baikov <konstantin.baikov@gmail.com>
+Code-Review+2: Jakub Pavlik <pavlk.jakub@gmail.com>
+Workflow+1: Jakub Pavlik <pavlk.jakub@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 20 Sep 2016 10:27:39 +0000
+Reviewed-on: https://review.openstack.org/373045
+Project: openstack/salt-formula-ceilometer
+Branch: refs/heads/master
