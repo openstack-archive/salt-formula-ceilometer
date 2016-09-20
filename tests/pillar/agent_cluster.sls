@@ -1,5 +1,6 @@
 ceilometer:
   agent:
+    region: RegionOne
     enabled: true
     version: liberty
     secret: password
