@@ -31,6 +31,37 @@ ceilometer_publisher_{{ publisher_name }}_pkg:
   - require:
     - pkg: ceilometer_server_packages
 
+{%- if server.version != "kilo" %}
+
+/etc/ceilometer/event_pipeline.yaml:
+  file.managed:
+  - source: salt://ceilometer/files/{{ server.version }}/event_pipeline.yaml
+  - template: jinja
+  - require:
+    - pkg: ceilometer_server_packages
+  - watch_in:
+    - service: ceilometer_server_services
+
+/etc/ceilometer/event_definitions.yaml:
+  file.managed:
+  - source: salt://ceilometer/files/{{ server.version }}/event_definitions.yaml
+  - template: jinja
+  - require:
+    - pkg: ceilometer_server_packages
+  - watch_in:
+    - service: ceilometer_server_services
+
+/etc/ceilometer/gabbi_pipeline.yaml:
+  file.managed:
+  - source: salt://ceilometer/files/{{ server.version }}/gabbi_pipeline.yaml
+  - template: jinja
+  - require:
+    - pkg: ceilometer_server_packages
+  - watch_in:
+    - service: ceilometer_server_services
+
+{%- endif %}
+
 ceilometer_server_services:
   service.running:
   - names: {{ server.services }}
