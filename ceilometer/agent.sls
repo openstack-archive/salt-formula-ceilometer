@@ -31,6 +31,18 @@ ceilometer_publisher_{{ publisher_name }}_pkg:
   - require:
     - pkg: ceilometer_agent_packages
 
+{%- if server.version != "kilo" %}
+
+/etc/ceilometer/event_pipeline.yaml:
+  file.managed:
+  - source: salt://ceilometer/files/{{ agent.version }}/event_pipeline.yaml
+  - template: jinja
+  - require:
+    - pkg: ceilometer_agent_packages
+  - watch_in:
+    - service: ceilometer_agent_services
+
+{%- endif %}
 
 ceilometer_agent_services:
   service.running:

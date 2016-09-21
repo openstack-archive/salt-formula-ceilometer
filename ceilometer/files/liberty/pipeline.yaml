@@ -79,6 +79,8 @@ sinks:
                 target:
                     name: "cpu.delta"
                 growth_only: True
+      publishers:
+          - notifier://
     - name: disk_sink
       transformers:
           - name: "rate_of_change"
