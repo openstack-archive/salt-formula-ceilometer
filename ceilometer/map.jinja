@@ -1,15 +1,3 @@
-
-{% set server = salt['grains.filter_by']({
-    'Debian': {
-        'pkgs': ['ceilometer-alarm-evaluator', 'ceilometer-api', 'ceilometer-agent-central', 'ceilometer-collector', 'python-ceilometerclient','ceilometer-agent-notification','ceilometer-alarm-notifier'],
-        'services': ['ceilometer-collector', 'ceilometer-api','ceilometer-agent-central','ceilometer-agent-notification','ceilometer-alarm-evaluator','ceilometer-alarm-notifier'],
-    },
-    'RedHat': {
-        'pkgs': ['openstack-ceilometer-alarm', 'openstack-ceilometer-api', 'openstack-ceilometer-central', 'openstack-ceilometer-collector', 'python-ceilometerclient'],
-        'services': ['openstack-ceilometer-collector', 'openstack-ceilometer-api'],
-    },
-}, merge=salt['pillar.get']('ceilometer:server')) %}
-
 {% set agent = salt['grains.filter_by']({
     'Debian': {
         'pkgs': ['ceilometer-agent-compute'],
@@ -20,3 +8,47 @@
         'services': ['openstack-ceilometer-compute'],
     },
 }, merge=salt['pillar.get']('ceilometer:agent')) %}
+
+# Server initialization
+
+{% set pkgs = salt['grains.filter_by']({
+    'Debian': {
+        'alarm': ['ceilometer-alarm-evaluator', 'ceilometer-alarm-notifier'],
+        'collector': ['ceilometer-collector'],
+        'basic': ['ceilometer-api', 'ceilometer-agent-central', 'python-ceilometerclient', 'ceilometer-agent-notification'],
+        'db_drivers': ['python-elasticsearch', 'python-influxdb'],
+    },
+    'RedHat': {
+        'alarm': ['openstack-ceilometer-alarm-evaluator', 'openstack-ceilometer-alarm-notifier'],
+        'basic':[ 'openstack-ceilometer-api', 'openstack-ceilometer-central', 'python-ceilometerclient'],
+        'collector':['openstack-ceilometer-collector'],
+        'db_drivers': ['python-elasticsearch', 'python-influxdb'],
+    },
+}) %}
+
+{% set services = salt['grains.filter_by']({
+    'Debian': {
+        'alarm': ['ceilometer-alarm-evaluator', 'ceilometer-alarm-notifier'],
+        'collector': ['ceilometer-collector'],
+        'basic': ['ceilometer-api', 'ceilometer-agent-central', 'python-ceilometerclient', 'ceilometer-agent-notification'],
+    },
+    'RedHat': {
+        'alarm':['openstack-ceilometer-alarm-evaluator', 'openstack-ceilometer-alarm-notifier'],
+        'basic':['openstack-ceilometer-api', 'openstack-ceilometer-central', 'openstack-ceilometer-notification'],
+        'collector': ['openstack-ceilometer-collector'],
+    },
+}) %}
+
+{%- set server = salt['grains.filter_by']({'default': {}}, merge=salt['pillar.get']('ceilometer:server')) %}
+
+# Mitaka based deployments don't need collector and alarm packages/services,
+# because alarming is implemented by Aodh and collector stuff is implemented
+# by the ceilometer_collector service.
+
+{%- if salt['pillar.get']('ceilometer:server:version') >= 'mitaka' %}
+{%- do server.update({'pkgs': pkgs.basic + pkgs.db_drivers}) %}
+{%- do server.update({'services': services.basic}) %}
+{%- else %}
+{%- do server.update({'pkgs': pkgs.basic + pkgs.collector + pkgs.alarm}) %}
+{%- do server.update({'services': services.basic + services.collector + services.alarm}) %}
+{%- endif %}
