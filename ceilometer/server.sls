@@ -1,9 +1,20 @@
 {%- from "ceilometer/map.jinja" import server with context %}
 {%- if server.enabled %}
 
+{%- if server.version == "mitaka" %}
+
 ceilometer_server_packages:
   pkg.installed:
-  - names: {{ server.pkgs }}
+  - names: {{ server.mitaka_pkgs }}
+
+{%- else %}
+
+ceilometer_server_packages:
+  pkg.installed:
+  - names: {{ server.all_pkgs }}
+
+{%- endif %}
+
 
 /etc/ceilometer/ceilometer.conf:
   file.managed:
@@ -62,11 +73,26 @@ ceilometer_publisher_{{ publisher_name }}_pkg:
 
 {%- endif %}
 
+
+{%- if server.version == "mitaka" %}
+
 ceilometer_server_services:
   service.running:
-  - names: {{ server.services }}
+  - names: {{ server.mitaka_services }}
   - enable: true
   - watch:
     - file: /etc/ceilometer/ceilometer.conf
+
+{%- else %}
+
+ceilometer_server_services:
+  service.running:
+  - names: {{ server.all_services }}
+  - enable: true
+  - watch:
+    - file: /etc/ceilometer/ceilometer.conf
+
+{%- endif %}
+
 
 {%- endif %}

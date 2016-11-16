@@ -3,6 +3,6 @@ parameters:
     server:
       publisher:
         graphite:
-          enabled: true
+          enabled: false
           host: ${_param:ceilometer_graphite_publisher_host}
           port: ${_param:ceilometer_graphite_publisher_port}
