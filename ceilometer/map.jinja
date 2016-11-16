@@ -1,12 +1,22 @@
 
 {% set server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['ceilometer-alarm-evaluator', 'ceilometer-api', 'ceilometer-agent-central', 'ceilometer-collector', 'python-ceilometerclient','ceilometer-agent-notification','ceilometer-alarm-notifier'],
-        'services': ['ceilometer-collector', 'ceilometer-api','ceilometer-agent-central','ceilometer-agent-notification','ceilometer-alarm-evaluator','ceilometer-alarm-notifier'],
+        'alarm_pkgs': ['ceilometer-alarm-evaluator', 'ceilometer-alarm-notifier'],
+        'collector_pkgs': ['ceilometer-collector'],
+        'basic_pkgs': ['ceilometer-api', 'ceilometer-agent-central', 'python-ceilometerclient', 'ceilometer-agent-notification'],
+        'alarm_services': ['ceilometer-alarm-evaluator', 'ceilometer-alarm-notifier'],
+        'collector_services': ['ceilometer-collector'],
+        'basic_services': ['ceilometer-api', 'ceilometer-agent-central', 'python-ceilometerclient', 'ceilometer-agent-notification'],
+        'db_module_pkgs': ['python-elasticsearch', 'python-influxdb'],
     },
     'RedHat': {
-        'pkgs': ['openstack-ceilometer-alarm', 'openstack-ceilometer-api', 'openstack-ceilometer-central', 'openstack-ceilometer-collector', 'python-ceilometerclient'],
-        'services': ['openstack-ceilometer-collector', 'openstack-ceilometer-api'],
+        'alarm_pkgs': ['openstack-ceilometer-alarm-evaluator', 'openstack-ceilometer-alarm-notifier'],
+        'basic_pkgs':[ 'openstack-ceilometer-api', 'openstack-ceilometer-central', 'python-ceilometerclient'],
+        'collector_pkgs':['openstack-ceilometer-collector'],
+        'alarm_services':['openstack-ceilometer-alarm-evaluator', 'openstack-ceilometer-alarm-notifier'],
+        'basic_services':['openstack-ceilometer-api', 'openstack-ceilometer-central', 'openstack-ceilometer-notification'],
+        'collector_services': ['openstack-ceilometer-collector'],
+        'db_module_pkgs': ['python-elasticsearch', 'python-influxdb'],
     },
 }, merge=salt['pillar.get']('ceilometer:server')) %}
 

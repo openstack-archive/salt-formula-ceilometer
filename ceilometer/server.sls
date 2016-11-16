@@ -1,9 +1,23 @@
 {%- from "ceilometer/map.jinja" import server with context %}
 {%- if server.enabled %}
 
+{%- if server.version >= "mitaka" %}
+
+# Mitaka based deployment doesn't need a collector and alarm packages and services,
+# because alarm functionality are implemented by Aodh and collector stuff is implemented
+# by ceilometer_collector
 ceilometer_server_packages:
   pkg.installed:
-  - names: {{ server.pkgs }}
+  - names: {{ server.basic_pkgs + server.db_module_pkgs }}
+
+{%- else %}
+
+ceilometer_server_packages:
+  pkg.installed:
+  - names: {{ server.basic_pkgs + server.collector_pkgs + server.alarm_pkgs }}
+
+{%- endif %}
+
 
 /etc/ceilometer/ceilometer.conf:
   file.managed:
@@ -62,11 +76,26 @@ ceilometer_publisher_{{ publisher_name }}_pkg:
 
 {%- endif %}
 
+
+{%- if server.version >= "mitaka" %}
+
 ceilometer_server_services:
   service.running:
-  - names: {{ server.services }}
+  - names: {{ server.basic_services }}
   - enable: true
   - watch:
     - file: /etc/ceilometer/ceilometer.conf
+
+{%- else %}
+
+ceilometer_server_services:
+  service.running:
+  - names: {{ server.basic_services + server.alarm_services + server.collector_services }}
+  - enable: true
+  - watch:
+    - file: /etc/ceilometer/ceilometer.conf
+
+{%- endif %}
+
 
 {%- endif %}

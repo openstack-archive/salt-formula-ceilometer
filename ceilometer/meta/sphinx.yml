@@ -47,8 +47,23 @@ doc:
           value: {{ server.identity.user }}@{{ server.identity.host }}:{{ server.identity.port }}
         packages:
           value: |
-            {%- for pkg in server.pkgs %}
+            {%- for pkg in server.basic_pkgs %}
             {%- set pkg_version = "dpkg -l "+pkg+" | grep "+pkg+" | awk '{print $3}'" %}
             * {{ pkg }}: {{ salt['cmd.run'](pkg_version) }}
             {%- endfor %}
+            {%- if server.version != 'mitaka' %}
+              {%- for pkg in server.alarm_pkgs %}
+              {%- set pkg_version = "dpkg -l "+pkg+" | grep "+pkg+" | awk '{print $3}'" %}
+              * {{ pkg }}: {{ salt['cmd.run'](pkg_version) }}
+              {%- endfor %}
+              {%- for pkg in server.collector_pkgs %}
+              {%- set pkg_version = "dpkg -l "+pkg+" | grep "+pkg+" | awk '{print $3}'" %}
+              * {{ pkg }}: {{ salt['cmd.run'](pkg_version) }}
+              {%- endfor %}
+            {%- else %}
+              {%- for pkg in server.db_module_pkgs %}
+              {%- set pkg_version = "dpkg -l "+pkg+" | grep "+pkg+" | awk '{print $3}'" %}
+              * {{ pkg }}: {{ salt['cmd.run'](pkg_version) }}
+              {%- endfor %}
+            {%- endif %}
   {%- endif %}
