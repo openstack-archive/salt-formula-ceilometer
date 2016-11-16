@@ -33,8 +33,12 @@ parameters:
         rpc_thread_pool_size: 5
       database:
         engine: mongodb
-        host: ${_param:ceilometer_database_host}
-        port: 27017
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 27017
+        - host: ${_param:cluster_node02_address}
+          port: 27017
+        - host: ${_param:cluster_node03_address}
+          port: 27017
         name: ceilometer
         user: ceilometer
-        password: ${_param:mongodb_ceilometer_password}

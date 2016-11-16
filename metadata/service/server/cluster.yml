@@ -42,4 +42,3 @@ parameters:
           port: 27017
         name: ceilometer
         user: ceilometer
-        password: ${_param:mongodb_ceilometer_password}
