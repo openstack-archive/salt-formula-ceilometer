@@ -1,12 +1,16 @@
 
 {% set server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['ceilometer-alarm-evaluator', 'ceilometer-api', 'ceilometer-agent-central', 'ceilometer-collector', 'python-ceilometerclient','ceilometer-agent-notification','ceilometer-alarm-notifier'],
-        'services': ['ceilometer-collector', 'ceilometer-api','ceilometer-agent-central','ceilometer-agent-notification','ceilometer-alarm-evaluator','ceilometer-alarm-notifier'],
+        'all_packages': ['ceilometer-alarm-evaluator', 'ceilometer-alarm-notifier', ceilometer-api', 'ceilometer-agent-central', 'ceilometer-collector', 'ceilometer-agent-notification', 'python-ceilometerclient'],
+        'mitaka_pkgs': ['ceilometer-api', 'ceilometer-agent-central', 'python-ceilometerclient', 'ceilometer-agent-notification', 'python-elasticsearch'],
+        'mitaka_services': ['ceilometer-api','ceilometer-agent-central','ceilometer-agent-notification'],
+        'all_services': ['ceilometer-alarm-evaluator', 'ceilometer-alarm-notifier', ceilometer-api', 'ceilometer-agent-central', 'ceilometer-collector'],
     },
     'RedHat': {
-        'pkgs': ['openstack-ceilometer-alarm', 'openstack-ceilometer-api', 'openstack-ceilometer-central', 'openstack-ceilometer-collector', 'python-ceilometerclient'],
-        'services': ['openstack-ceilometer-collector', 'openstack-ceilometer-api'],
+        'mitaka_pkgs':[ 'openstack-ceilometer-api', 'openstack-ceilometer-central', 'python-ceilometerclient'],
+        'all_pkgs':[ 'openstack-ceilometer-api', 'openstack-ceilometer-central', 'python-ceilometerclient', 'openstack-ceilometer-alarm', 'openstack-ceilometer-collector'],
+        'all_services':['openstack-ceilometer-api', 'openstack-ceilometer-central', 'openstack-ceilometer-collector', 'openstack-ceilometer-alarm-evaluator', 'openstack-ceilometer-notification'],
+        'mitaka_services':['openstack-ceilometer-api', 'openstack-ceilometer-central', 'openstack-ceilometer-notification'],
     },
 }, merge=salt['pillar.get']('ceilometer:server')) %}
 
