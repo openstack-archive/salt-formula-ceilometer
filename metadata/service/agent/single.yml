@@ -12,14 +12,14 @@ parameters:
         default:
       identity:
         engine: keystone
-        host: ${_param:cluster_vip_address}
+        host: ${_param:single_address}
         port: 35357
         tenant: service
         user: ceilometer
         password: ${_param:keystone_ceilometer_password}
       message_queue:
         engine: rabbitmq
-        host: ${_param:cluster_vip_address}
+        host: ${_param:single_address}
         port: 5672
         user: openstack
         password: ${_param:rabbitmq_openstack_password}
