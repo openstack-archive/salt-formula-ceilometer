@@ -62,11 +62,14 @@ ceilometer_publisher_{{ publisher_name }}_pkg:
 
 {%- endif %}
 
+
+
 ceilometer_server_services:
   service.running:
   - names: {{ server.services }}
   - enable: true
   - watch:
     - file: /etc/ceilometer/ceilometer.conf
+
 
 {%- endif %}

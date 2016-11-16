@@ -32,14 +32,13 @@ parameters:
         # Workaround for https://bugs.launchpad.net/ceilometer/+bug/1337715
         rpc_thread_pool_size: 5
       database:
-        engine: mongodb
-        members:
-        - host: ${_param:cluster_node01_address}
-          port: 27017
-        - host: ${_param:cluster_node02_address}
-          port: 27017
-        - host: ${_param:cluster_node03_address}
-          port: 27017
-        name: ceilometer
-        user: ceilometer
-        password: ${_param:mongodb_ceilometer_password}
+        influxdb:
+          user: ${_param:ceilometer_influxdb_user}
+          password: ${_param:ceilometer_influxdb_password}
+          dbname: ${_param:ceilometer_influxdb_database}
+          host: ${_param:ceilometer_influxdb_host}
+          port: ${_param:ceilometer_influxdb_port}
+        elasticsearch:
+          host: ${_param:ceilometer_elasticsearch_host}
+          port: ${_param:ceilometer_elasticsearch_port}
+          enable: ${_param:ceilometer_elasticsearch_enable}

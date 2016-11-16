@@ -2,7 +2,7 @@ ceilometer:
   server:
     #region: RegionOne
     enabled: true
-    version: liberty
+    version: mitaka
     secret: password
     ttl: 86400
     publisher:
