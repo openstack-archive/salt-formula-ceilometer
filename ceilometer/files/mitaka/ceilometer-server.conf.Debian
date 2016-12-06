@@ -193,15 +193,15 @@ alarm_history_time_to_live = {{ server.ttl }}
 # Deprecated group/name - [DEFAULT]/sql_connection
 # Deprecated group/name - [DATABASE]/sql_connection
 # Deprecated group/name - [sql]/connection
-metering_connection = stacklight://{{ server.database.influxdb.user }}:{{ server.database.influxdb.password }}@{{ server.database.influxdb.host }}:{{ server.database.influxdb.port }}/{{ server.database.influxdb.dbname }}
+metering_connection = stacklight://{{ server.database.influxdb.user }}:{{ server.database.influxdb.password }}@{{ server.database.influxdb.host }}:{{ server.database.influxdb.port }}/{{ server.database.influxdb.database }}
 
-{{{%- if server.database.elasticsearch.enabled %}}}
+{%- if server.database.elasticsearch.enabled %}
 resource_connection = es://{{ server.database.elasticsearch.host}}:{{server.database.elasticsearch.port }}
 event_connection = es://{{ server.database.elasticsearch.host}}:{{server.database.elasticsearch.port }}
-{{%- else %}}
+{%- else %}
 resource_connection = es://localhost:9200
 event_connection = log://
-{{%- endif }}
+{%- endif }
 
 # The SQLAlchemy connection string to use to connect to the slave
 # database. (string value)
