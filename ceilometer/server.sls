@@ -5,6 +5,10 @@ ceilometer_server_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
 
+ceilometer_extra_pkgs:
+  pkg.installed:
+  - sources: {{ server.extra_sources }}
+
 /etc/ceilometer/ceilometer.conf:
   file.managed:
   - source: salt://ceilometer/files/{{ server.version }}/ceilometer-server.conf.{{ grains.os_family }}
