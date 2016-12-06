@@ -16,13 +16,15 @@
         'alarm': ['ceilometer-alarm-evaluator', 'ceilometer-alarm-notifier'],
         'collector': ['ceilometer-collector'],
         'basic': ['ceilometer-api', 'ceilometer-agent-central', 'python-ceilometerclient', 'ceilometer-agent-notification'],
-        'db_drivers': ['python-elasticsearch', 'python-influxdb'],
+        'db_drivers': ['python-elasticsearch'],
+        'extra_sources': [{'python-influxdb': 'http://mirror.fuel-infra.org/mos-repos/ubuntu/snapshots/9.0-latest/pool/main/i/influxdb-python/python-influxdb_2.12.0-1~u14.04%2bmos1_all.deb'}],
     },
     'RedHat': {
         'alarm': ['openstack-ceilometer-alarm-evaluator', 'openstack-ceilometer-alarm-notifier'],
         'basic':[ 'openstack-ceilometer-api', 'openstack-ceilometer-central', 'python-ceilometerclient'],
         'collector':['openstack-ceilometer-collector'],
-        'db_drivers': ['python-elasticsearch', 'python-influxdb'],
+        'db_drivers': ['python-elasticsearch'],
+        'extra_sources': [],
     },
 }) %}
 
@@ -51,4 +53,5 @@
 {%- else %}
 {%- do server.update({'pkgs': pkgs.basic + pkgs.db_drivers}) %}
 {%- do server.update({'services': services.basic}) %}
+{%- do server.update({'extra_sources': pkgs.extra_sources}) %})}
 {%- endif %}
