@@ -66,7 +66,13 @@ rpc_thread_pool_size = {{ agent.message_queue.rpc_thread_pool_size }}
 # AMQP topic used for OpenStack notifications. (list value)
 # Deprecated group/name - [rpc_notifier2]/topics
 #notification_topics = notifications
-notification_topics=notifications
+{%- if agent.notification.topics is defined %}
+notification_topics = {{ agent.notification.topics }}
+{%- else %}
+notification_topics = notifications
+{%- endif %}
+
+
 
 # Seconds to wait for a response from a call. (integer value)
 #rpc_response_timeout = 60
