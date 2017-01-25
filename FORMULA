@@ -1,8 +1,0 @@
-name: ceilometer
-os: Debian, RedHat
-os_family: Debian, RedHat
-version: 201606
-release: 1
-summary: Formula for installing and configuring ceilometer
-description: Formula for installing and configuring ceilometer
-top_level_dir: ceilometer
